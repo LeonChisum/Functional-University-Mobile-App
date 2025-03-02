@@ -1,9 +1,9 @@
 {
   "name": "Functional",
-  "displayName": "Functional",
+  "displayName": "Functional University",
   "expo": {
     "name": "Functional",
-    "slug": "Functional",
+    "slug": "fitness-university",
     "scheme": "functional",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -14,9 +14,7 @@
     },
     "newArchEnabled": false,
     "jsEngine": "hermes",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "android": {
       "icon": "./assets/images/app-icon-android-legacy.png",
       "package": "com.functionaluniversity",
@@ -49,6 +47,11 @@
     ],
     "experiments": {
       "tsconfigPaths": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "8968b201-73ad-414f-a38e-ed04da305183"
+      }
     }
   },
   "ignite": {

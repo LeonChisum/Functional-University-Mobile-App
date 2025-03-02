@@ -31,11 +31,11 @@ jobs:
       - name: Check code formatting
         run: npm run format:all
 
-      - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: "style: format code with prettier"
-          branch: ${{ github.head_ref }}
+      # - name: Commit changes
+      #   uses: stefanzweifel/git-auto-commit-action@v4
+      #   with:
+      #     commit_message: "style: format code with prettier"
+      #     branch: ${{ github.head_ref }}
 
       - name: Run ESLint
         run: npm run lint

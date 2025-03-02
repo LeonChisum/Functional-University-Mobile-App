@@ -7,6 +7,8 @@
     "compile": "tsc --noEmit -p . --pretty",
     "lint": "eslint . --fix",
     "lint:check": "eslint .",
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
+    "format:check": "prettier --check \"src/**/*.{js,jsx,ts,tsx}\"",
     "patch": "patch-package",
     "test": "jest",
     "test:watch": "jest --watch",

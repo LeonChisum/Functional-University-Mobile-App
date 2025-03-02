@@ -1,0 +1,65 @@
+name: CI/CD Pipeline for Develop
+
+run-name: Deployed by @${{ github.actor }}
+
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm install --frozen-lockfile
+
+      - name: Check code formatting
+        run: npm run format:all
+
+      # - name: Commit changes
+      #   uses: stefanzweifel/git-auto-commit-action@v4
+      #   with:
+      #     commit_message: "style: format code with prettier"
+      #     branch: ${{ github.head_ref }}
+
+      - name: Run ESLint
+        run: npm run lint
+
+      - name: Run tests
+        run: npm run test
+
+      - name: Cache build artifacts
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+            ~/.npm
+            ${{ github.workspace }}/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+
+  # Builds and deploy to iOS
+  ios:
+    needs: quality
+    uses: ./.github/workflows/ios.yaml
+
+  # Builds and deploy to android
+  android:
+    needs: quality
+    uses: ./.github/workflows/android.yaml

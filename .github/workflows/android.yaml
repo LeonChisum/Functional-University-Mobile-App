@@ -1,0 +1,49 @@
+name: Android Build and Deploy
+
+on:
+  workflow_call:
+
+jobs:
+  build-android:
+    name: Build and Deploy Android App
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: "17"
+          distribution: "adopt"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.0"
+
+      # - name: Install Fastlane
+      #   run: |
+      #     gem install bundler
+      #     gem install fastlane
+
+      # - name: Setup Keystore
+      #   run: |
+      #     echo "${{ secrets.ANDROID_KEYSTORE }}" > keystore.jks.base64
+      #     base64 -d keystore.jks.base64 > app/keystore.jks
+
+      # - name: Deploy to Internal Testing
+      #   env:
+      #     KEYSTORE_PATH: app/keystore.jks
+      #     STORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+      #     KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+      #     KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+      #     GOOGLE_PLAY_JSON_KEY: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}
+      #   run: cd android && fastlane beta changelog:"Establishing CI/CD"
